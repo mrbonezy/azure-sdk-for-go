@@ -44,6 +44,11 @@ type QueryOptions struct {
 	// If set to false, cross-partition queries will be rejected.
 	// The default value, if this is not set, is true.
 	EnableCrossPartitionQuery *bool
+
+	// PartitionKeyRangeId is used to specify the partition key range to query.
+	// If set, the query engine will set the 'x-ms-documentdb-partitionkeyrangeid' header to the specified value.
+	// This should not be used alongside EnableCrossPartitionQuery=true.
+	PartitionKeyRangeId *string
 }
 
 func (options *QueryOptions) toHeaders() *map[string]string {
@@ -94,6 +99,10 @@ func (options *QueryOptions) toHeaders() *map[string]string {
 
 	if options.EnableCrossPartitionQuery == nil || *options.EnableCrossPartitionQuery {
 		headers[cosmosHeaderEnableCrossPartitionQuery] = "true"
+	}
+
+	if options.PartitionKeyRangeId != nil {
+		headers[cosmosHeaderPartitionKeyRangeId] = *options.PartitionKeyRangeId
 	}
 
 	return &headers

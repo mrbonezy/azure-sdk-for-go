@@ -436,7 +436,7 @@ func (c *ContainerClient) ReadItem(
 // ctx - The context for the request.
 func (c *ContainerClient) GetFeedRanges(ctx context.Context) ([]FeedRange, error) {
 	// Get the partition key ranges from the container
-	response, err := c.getPartitionKeyRanges(ctx, nil)
+	response, err := c.GetPartitionKeyRanges(ctx, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -724,10 +724,10 @@ func (c *ContainerClient) getSpanForItems(operationType operationType) (span, er
 	return getSpanNameForItems(c.database.client.accountEndpointUrl(), operationType, c.database.id, c.id)
 }
 
-func (c *ContainerClient) getPartitionKeyRanges(ctx context.Context, o *partitionKeyRangeOptions) (partitionKeyRangeResponse, error) {
+func (c *ContainerClient) GetPartitionKeyRanges(ctx context.Context, o *partitionKeyRangeOptions) (PartitionKeyRangeResponse, error) {
 	spanName, err := c.getSpanForContainer(operationTypeRead, resourceTypePartitionKeyRange, c.id)
 	if err != nil {
-		return partitionKeyRangeResponse{}, err
+		return PartitionKeyRangeResponse{}, err
 	}
 	ctx, endSpan := runtime.StartSpan(ctx, spanName.name, c.database.client.internal.Tracer(), &spanName.options)
 	defer func() { endSpan(err) }()
@@ -743,7 +743,7 @@ func (c *ContainerClient) getPartitionKeyRanges(ctx context.Context, o *partitio
 
 	path, err := generatePathForNameBased(resourceTypePartitionKeyRange, operationContext.resourceAddress, true)
 	if err != nil {
-		return partitionKeyRangeResponse{}, err
+		return PartitionKeyRangeResponse{}, err
 	}
 
 	azResponse, err := c.database.client.sendGetRequest(
@@ -755,7 +755,7 @@ func (c *ContainerClient) getPartitionKeyRanges(ctx context.Context, o *partitio
 
 	response, err := newPartitionKeyRangeResponse(azResponse)
 	if err != nil {
-		return partitionKeyRangeResponse{}, err
+		return PartitionKeyRangeResponse{}, err
 	}
 	return response, nil
 }

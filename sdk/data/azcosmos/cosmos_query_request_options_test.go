@@ -7,6 +7,8 @@ import (
 	"strconv"
 	"testing"
 	"time"
+
+	"github.com/Azure/azure-sdk-for-go/sdk/azcore/to"
 )
 
 func TestQueryRequestOptionsToHeaders(t *testing.T) {
@@ -18,6 +20,7 @@ func TestQueryRequestOptionsToHeaders(t *testing.T) {
 	options.EnableScanInQuery = true
 	options.ResponseContinuationTokenLimitInKB = 100
 	options.PopulateIndexMetrics = true
+	options.PartitionKeyRangeId = to.Ptr("partitionKeyRangeId")
 	continuation := "continuationToken"
 	options.ContinuationToken = &continuation
 	maxIntegratedCacheStalenessDuration := time.Duration(5 * time.Minute)
@@ -60,6 +63,9 @@ func TestQueryRequestOptionsToHeaders(t *testing.T) {
 	}
 	if headers[headerDedicatedGatewayBypassCache] != "true" {
 		t.Errorf("headerDedicatedGatewayBypassCache should be true but got %v", headers[headerDedicatedGatewayBypassCache])
+	}
+	if headers[cosmosHeaderPartitionKeyRangeId] != "partitionKeyRangeId" {
+		t.Errorf("PartitionKeyRangeId should be partitionKeyRangeId but got %v", headers[cosmosHeaderPartitionKeyRangeId])
 	}
 }
 

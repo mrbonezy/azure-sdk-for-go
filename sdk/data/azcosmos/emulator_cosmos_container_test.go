@@ -593,7 +593,7 @@ func TestEmulatorContainerPartitionKeyRangesAndFeedRanges(t *testing.T) {
 	time.Sleep(2 * time.Second)
 
 	// Get Partition Key Ranges directly
-	pkRangesResponse, err := container.getPartitionKeyRanges(context.TODO(), nil)
+	pkRangesResponse, err := container.GetPartitionKeyRanges(context.TODO(), nil)
 
 	// Log all partition key ranges for debugging
 	for i, pkRange := range pkRangesResponse.PartitionKeyRanges {
