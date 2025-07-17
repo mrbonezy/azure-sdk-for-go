@@ -753,9 +753,11 @@ func (c *ContainerClient) GetPartitionKeyRanges(ctx context.Context, o *partitio
 		o,
 		nil)
 
-	response, err := newPartitionKeyRangeResponse(azResponse)
 	if err != nil {
 		return PartitionKeyRangeResponse{}, err
 	}
-	return response, nil
+
+	response, err := newPartitionKeyRangeResponse(azResponse)
+
+	return response, err
 }
