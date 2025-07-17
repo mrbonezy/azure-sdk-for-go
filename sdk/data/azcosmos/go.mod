@@ -3,9 +3,9 @@ module github.com/mrbonezy/azure-sdk-for-go/sdk/data/azcosmos
 go 1.23.0
 
 require (
-	github.com/mrbonezy/azure-sdk-for-go/sdk/azcore v1.18.1
-	github.com/mrbonezy/azure-sdk-for-go/sdk/azidentity v1.10.1
-	github.com/mrbonezy/azure-sdk-for-go/sdk/internal v1.11.1
+	github.com/mrbonezy/azure-sdk-for-go/sdk/azcore v0.0.0-20250717094828-6aaf73d5179c
+	github.com/mrbonezy/azure-sdk-for-go/sdk/azidentity v0.0.0-20250717094828-6aaf73d5179c
+	github.com/mrbonezy/azure-sdk-for-go/sdk/internal v0.0.0-20250717094828-6aaf73d5179c
 	github.com/stretchr/testify v1.10.0
 )
 
